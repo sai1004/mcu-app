@@ -8,7 +8,7 @@ export class UserController {
     private service = new UserService();
 
     getRouter() {
-        this.router.post("/save", async (request: any, response: any) => {
+        this.router.put("/save", async (request: any, response: any) => {
             try {
                 let reqData: any = {};
                 reqData = request.body ? request.body.data : {};

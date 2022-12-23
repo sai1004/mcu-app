@@ -29,6 +29,17 @@ const startServer = async () => {
             app.use(bodyParser.urlencoded({ extended: false }));
             app.use(logger("dev"));
 
+            var whitelist = ["http://127.0.0.1:4200"];
+            var corsOptionsDelegate = function (req: any, callback: any) {
+                var corsOptions;
+                if (whitelist.indexOf(req.header("Origin")) !== -1) {
+                    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+                } else {
+                    corsOptions = { origin: false }; // disable CORS for this request
+                }
+                callback(null, corsOptions); // callback expects two parameters: error and options
+            };
+
             /* ''''''' App Routes ''''''''' */
 
             app.get("/api", (req: any, res: any) => {
